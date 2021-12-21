@@ -22,6 +22,16 @@ export default function MedicineList(props){
         setMedicineId(id);
     }
 
+    const deleteMedicine = id => {
+        if (window.confirm('Are you sure to delete this record?')) {
+            createAPIEndpoint(ENDPIONTS.MEDICINES).delete(id)
+                .then(res => {
+                    setMedicineId(0);
+                })
+                .catch(err => console.log(err))
+        }
+    }
+
     return (
         <Box pl={15}>
         <Table>
@@ -52,10 +62,12 @@ export default function MedicineList(props){
                                 {item.medicineType.medicineTypeName}
                             </TableCell>
                             <TableCell>
-                                <DeleteSweepIcon color="secondary"/>
+                                <DeleteSweepIcon color="secondary"
+                                onClick={e => deleteMedicine(item.medicineId)}/>
                             </TableCell>
                             <TableCell>
-                                <EditIcon color="secondary"/>
+                                <EditIcon 
+                                color="secondary"/>
                             </TableCell>
                         </TableRow>
                     ))
